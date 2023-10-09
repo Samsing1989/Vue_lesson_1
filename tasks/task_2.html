@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Задача 2</title>
+  </head>
+
+  <body>
+    <h1>Задача 2</h1>
+    <p>
+      Вводиться номер місяця. Автоматично виводити рекомендований одяг (зима –
+      пальто, літо – шорти ….). Також автоматично виводити зображення з
+      відповідним зображенням лісу (зима – ліс зі снігом, осінь – жовтий ліс,
+      …).
+    </p>
+    <!-- <!-- //======================================================================================================================================================== -- -->
+    <div id="app">
+      <div>
+        <label>
+          Введіть номер місяця :
+          <input type="number" v-model="month" @change="getMouth" />
+        </label>
+      </div>
+
+      <div>пора року : <span>{{text}}</span></div>
+      <div>
+        <img :src="image" alt="image" width="200" />
+      </div>
+    </div>
+
+    <script>
+      const { createApp } = Vue
+
+      const app = createApp({
+        data() {
+          return {
+            month: 0,
+            image: null,
+            text: null,
+          }
+        },
+        methods: {
+          getMouth() {
+            switch (this.month) {
+              case 12:
+              case 1:
+              case 2:
+                this.text = "прийшла зима одіваємо шубу"
+                this.image = "./img/winter.jpg"
+                break
+              case 3:
+              case 4:
+              case 5:
+                this.text = "прийла весна вітровки одіваємо"
+                this.image = "./img/spring.jpg"
+                break
+              case 6:
+              case 7:
+              case 8:
+                this.text = "прийло літо шорти одіваємо"
+                this.image = "./img/sammer.jpg"
+                break
+              case 9:
+              case 10:
+              case 11:
+                this.text = "прийла вксна пально одіваємо"
+                this.image = "./img/autumn.jpg"
+                break
+              default:
+                this.text = "введіть число місяця від 1 до 12"
+            }
+          },
+        },
+      })
+      app.mount("#app")
+    </script>
+  </body>
+</html>

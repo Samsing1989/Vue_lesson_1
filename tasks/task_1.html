@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+  </head>
+  <style>
+    body {
+      font-size: 22px;
+    }
+    input {
+      padding: 10px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+  </style>
+  <body>
+    <h1>Задача 1. Вводиться кількість пасажирів. Вивести:</h1>
+    <ul>
+      <li>скільки потрібно автобусів (кожен автобус на 20 місць)</li>
+      <li>скільки пляшок води (кожному пасажиру 2 пляшки)</li>
+      <li>скільки бутербродів (кожному пасажиру 3 бутерброди)</li>
+    </ul>
+    <div id="myApp">
+      <div>
+        <label>
+          Введіть кількість пасажирів :
+          <input type="number" v-model="passengers" />
+        </label>
+      </div>
+
+      <div>
+        Aвтобусів потрібно :
+        <span> {{ getBus() }}</span>
+      </div>
+      <div>Пляшок води потрібно : <span>{{ getBottles() }} шт</span></div>
+      <div>Бутербродів потрібно: <span>{{ getSandwich()}} шт</span></div>
+    </div>
+
+    <script>
+      const { createApp } = Vue
+
+      const app = createApp({
+        data() {
+          return {
+            passengers: 0,
+            bus: 20,
+            bottles: 2,
+            sandwiches: 3,
+          }
+        },
+        methods: {
+          getBus() {
+            return Math.ceil(this.passengers / this.bus)
+          },
+          getBottles() {
+            return this.passengers * this.bottles
+          },
+          getSandwich() {
+            return this.passengers * this.sandwiches
+          },
+        },
+      })
+
+      app.mount("#myApp")
+    </script>
+  </body>
+</html>

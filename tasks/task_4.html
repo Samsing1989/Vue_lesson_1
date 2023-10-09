@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Задача 4</title>
+  </head>
+
+  <body>
+    <h1>Задача 4. “Рахунок у банку”</h1>
+    <ol>
+      <li>
+        Спочатку сума дорівнює 0грн. Змінити суму у гривнях можна або
+        зарахуванням на рахунок, або зняттям.
+      </li>
+      <li>
+        Сума автоматично переводиться у долари та євро (фіксований курс
+        задається у data).
+      </li>
+      <li>можливість зарахувати суму (контролювати, щоб не була від’ємною)</li>
+      <li>можливість зняти (щоб не можна зняти більше ніж є на рахунку)</li>
+      <li>
+        при виконанні зняття і зарахування коштів вираховувати 3% від суми
+        (відображати кількість відсотків автоматично)
+      </li>
+    </ol>
+    <div>
+      При зміні суми :
+      <ul>
+        <li>якщо було зняття, то суму відоражати червоним</li>
+        <li>якщо було зарахування, то суму відображати зеленим</li>
+      </ul>
+      <p>
+        Якщо сума валюти менша за 100 то відображати червоним кольором, інакше -
+        зеленим
+      </p>
+      <div class="image">
+        <img src="./img/image_4.png" alt="img" />
+      </div>
+    </div>
+    //========================================================================================================================================================
+    <div id="myApp">
+      <div>
+        Сума нарахування: <span :style="colorNum">{{sumNum}} грн.</span>
+      </div>
+      <div>
+        <label
+          >Зараховано на рахунок: <input type="number" v-model="enrollment"
+        /></label>
+        <button @click="getEnrollmen">Зарахування</button>
+      </div>
+      <div>
+        <label
+          >Знаття з рахунку: <input type="number" v-model="withdrawal"
+        /></label>
+        <button @click="getWithdrawal">зняти</button>
+      </div>
+      <div>Відсоток за обслуховуваня: {{comission}} грн</div>
+      <hr />
+
+      <div :style="getDollar > 100 ? 'color:green' : 'color:red'">
+        Сума у доларах: ${{getDollar}}
+      </div>
+      <div :style="getEvro > 100 ? 'color:green' : 'color:red'">
+        Сума у євро: Є{{getEvro}}
+      </div>
+    </div>
+
+    <script>
+      const { createApp } = Vue
+
+      const app = createApp({
+        data() {
+          return {
+            sumNum: 0,
+            enrollment: null,
+            withdrawal: null,
+            dollar: 38,
+            evro: 40,
+            colorNum: "color: black;",
+            comission: 0,
+          }
+        },
+        methods: {
+          getEnrollmen() {
+            if (this.sumNum >= 0 && this.enrollment > 0) {
+              this.sumNum += this.enrollment * 0.97
+              this.comission = this.enrollment * 0.03
+              this.enrollment = 0
+              this.colorNum = "color:green"
+            }
+          },
+          getWithdrawal() {
+            if (this.withdrawal > 0 && this.withdrawal <= this.sumNum) {
+              this.sumNum -= this.withdrawal * 0.97
+              this.comission = this.withdrawal * 0.03
+              this.colorNum = "color:red"
+            } else this.withdrawal = 0
+          },
+        },
+        computed: {
+          getDollar() {
+            return (this.sumNum / this.dollar).toFixed(2)
+          },
+
+          getEvro() {
+            return (this.sumNum / this.evro).toFixed(2)
+          },
+        },
+      })
+      app.mount("#myApp")
+    </script>
+  </body>
+</html>

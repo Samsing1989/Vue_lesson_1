@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Задача 5</title>
+  </head>
+
+  <body>
+    <h1>Задача 5</h1>
+    <p>
+      Додаток містить масив об’єктів (логін, пароль) -- інсуючі логіни і паролі.
+      Користувач вводить логін і пароль, а програма повідомляє чи може
+      користувач бути авторизованим (чи є він одним з масиву).
+    </p>
+    <div class="image">
+      <img src=".//img/image_5.png" alt="img" />
+    </div>
+    <!-- //======================================================================================================================================================== -->
+
+    <div id="myApp">
+      <div>
+        <label>логін: <input type="text" v-model="login" /></label>
+      </div>
+      <div>
+        <label>пароль: <input type="password" v-model="password" /></label>
+      </div>
+      <button @click="getUser">go</button>
+      <div>{{messenge }}</div>
+    </div>
+
+    <script>
+      const { createApp } = Vue
+      const userPass = [
+        {
+          name: "olga",
+          pass: "12345",
+        },
+        {
+          name: "stepan",
+          pass: "75888",
+        },
+        {
+          name: "Volodya",
+          pass: "000000",
+        },
+        {
+          name: "Kolya",
+          pass: "777777",
+        },
+      ]
+      const app = createApp({
+        data() {
+          return {
+            password: null,
+            login: null,
+            messenge: null,
+          }
+        },
+        methods: {
+          getUser() {
+            for (const userName of userPass) {
+              if (
+                userName.name === this.login &&
+                userName.pass === this.password
+              ) {
+                this.messenge = "Ви ввели правильно логін і пароль"
+                break
+              } else this.messenge = "Невірний логін і пароль"
+            }
+          },
+        },
+      })
+      app.mount("#myApp")
+    </script>
+  </body>
+</html>
